@@ -6,23 +6,41 @@
 package com.play.threadman;
 
 public class CustomThread extends Thread {
-    private static long _ID = 1;
-    private long jobId = _ID++;
+    private static int _ID = 1;
+    private int jobId = _ID++;
+    private int sleepSec = 0;
     private boolean running = true;
     private String originCode;
     private String destinationCode;
 
     public CustomThread(String originCode,
-                        String destinationCode) {
+                        String destinationCode,
+                        int sleepSec) {
         this.originCode = originCode;
         this.destinationCode = destinationCode;
+        this.sleepSec = sleepSec;
     }
 
-    public long getJobId() {
+    @Override
+    public void run() {
+        super.run();
+        while (running) {
+            String message = String.format("API Call to flight from: %s to: %s", originCode, destinationCode);
+            System.out.println(message);
+
+            try {
+                sleep(this.sleepSec * 1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int getJobId() {
         return jobId;
     }
 
-    public void setJobId(long jobId) {
+    public void setJobId(int jobId) {
         this.jobId = jobId;
     }
 

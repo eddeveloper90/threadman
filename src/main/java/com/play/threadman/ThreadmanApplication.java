@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ThreadmanApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ThreadmanApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ThreadmanApplication.class, args);
+    }
 
 }

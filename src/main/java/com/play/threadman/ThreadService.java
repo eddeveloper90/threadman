@@ -7,18 +7,33 @@ package com.play.threadman;
 
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ThreadService {
-    private List<Thread> threadList = new LinkedList<>();
+    private Map<Integer, CustomThread> threadMap = new HashMap<>();
 
     public String info() {
+        StringBuilder sb = new StringBuilder();
         return "";
     }
 
-    public void add() {
-        this.threadList.add(new Thread());
+    public String add(String origin, String dest, int sleep) {
+        CustomThread c = new CustomThread(origin, dest, sleep);
+        c.start();
+        this.threadMap.put(c.getJobId(), c);
+        return "tid: " + c.getJobId();
+    }
+
+    public String rm(int threadId) {
+        CustomThread c = this.threadMap.get(threadId);
+        if (c == null)
+            return "no thread!";
+
+        c.setRunning(false);
+        c.suspend();
+        this.threadMap.remove(threadId);
+        return String.format("thread %d removed.", threadId);
     }
 }
